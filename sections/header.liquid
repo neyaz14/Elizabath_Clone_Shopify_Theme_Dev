@@ -1,9 +1,21 @@
-<div class="relative bg-white">
+<div class="relative bg-white" x-data="{ mobileMenuOpen: true }">
   <div class="mx-auto px-4 sm:px-6">
-    <div class="flex justify-center items-center py-6 md:justify-start md:space-x-10">
+    <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
       <!-- STORE NAME / STORE LOGO -->
+
       <div class="flex justify-start lg:flex-1 truncate">
         <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+      </div>
+
+      <!-- mobile menu hambarguer -->
+      <div class="-mr-2 -my-2 ml-3 absolute right-2 md:hidden">
+        <button
+          x-on:click="mobileMenuOpen= true"
+          type="button"
+          class="bg-white p-2 inline-flex items-center justify-center focus:outline-none"
+        >
+          {% render 'hambarg' %}
+        </button>
       </div>
 
       <!-- NAVIGATION MENU -->
@@ -55,6 +67,65 @@
 
         <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
         <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu   code -->
+
+  <div x-show="mobileMenuOpen" class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
+    <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
+      <div class="p-5 divide-y-2 divide-gray-50">
+        <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
+        <div class="flex items-center justify-between pb-3">
+          <div>
+            <h1 class="text-lg text-gray-500">{{ shop.name }}</h1>
+          </div>
+          <div x-on:click="mobileMenuOpen= false" class="-mr-2">
+            <button type="button" class="bg-white rounded-md p-2 text-gray-500">{% render 'close' %}</button>
+          </div>
+        </div>
+
+        <!-- NAVIGATION LINKS FOR MOBILE MENU -->
+        <div class="pt-3">
+          <nav class="grid gap-y-7" x-data="{mobileDropDown: false}">
+            {% for link in linklists['main-menu'].links %}
+              {% if link.links != blank %}
+                <div class="relative">
+                  <button
+                    type="button"
+                    class="flex justify-between items-center text-base text-gray-500 hover:text-gray-900"
+                  >
+                    <p>{{ link.title }}</p>
+                    <p x-on:click="mobileDropDown = !mobileDropDown" class="mx-2 ">{% render 'chevrion' %}</p>
+                  </button>
+                </div>
+
+                <!--  -->
+                <div x-show="mobileDropDown" @click.away="mobileDropDown = false">
+                {% for childLink in link.links %}
+                  <div>
+                    <a
+                      href="{{ link.url }}"
+                      class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                    >
+                      {{ childLink.title }}
+                    </a>
+                  </div>
+                {% endfor %}
+                </div>
+
+              {% else %}
+                <a
+                  href="{{ link.url }}"
+                  class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                >
+                  {{ link.title }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        </div>
       </div>
     </div>
   </div>
