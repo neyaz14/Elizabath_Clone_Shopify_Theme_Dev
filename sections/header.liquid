@@ -1,10 +1,12 @@
-<div class="relative bg-white" x-data="{ mobileMenuOpen: true }">
+{% assign main_menu_linkList = linklists[section.settings.another_menu].links %}
+{{ shop.customer_accounts_enabled }}
+<div class="relative bg-white" x-data="{ mobileMenuOpen: false }">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
       <!-- STORE NAME / STORE LOGO -->
 
       <div class="flex justify-start lg:flex-1 truncate">
-        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+        <h1 class="text-xl font-bold truncate">{{ section.settings.mobile_menu_title }}</h1>
       </div>
 
       <!-- mobile menu hambarguer -->
@@ -20,7 +22,7 @@
 
       <!-- NAVIGATION MENU -->
       <nav x-data="{ open: false }" class="hidden md:flex space-x-10">
-        {% for link in linklists['main-menu'].links -%}
+        {% for link in main_menu_linkList -%}
           {% if link.links != blank %}
             <div class="relative">
               <button
@@ -65,8 +67,10 @@
           {% render 'cart-svg' %}
         </a>
 
-        <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
-        <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+        {% if shop.customer_accounts_enabled %}
+          <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
+          <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -79,7 +83,7 @@
         <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
         <div class="flex items-center justify-between pb-3">
           <div>
-            <h1 class="text-lg text-gray-500">{{ shop.name }}</h1>
+            <h1 class="text-lg text-gray-500">{{ section.settings.mobile_menu_title }}</h1>
           </div>
           <div x-on:click="mobileMenuOpen= false" class="-mr-2">
             <button type="button" class="bg-white rounded-md p-2 text-gray-500">{% render 'close' %}</button>
@@ -89,7 +93,7 @@
         <!-- NAVIGATION LINKS FOR MOBILE MENU -->
         <div class="pt-3">
           <nav class="grid gap-y-7" x-data="{mobileDropDown: false}">
-            {% for link in linklists['main-menu'].links %}
+            {% for link in main_menu_linkList %}
               {% if link.links != blank %}
                 <div class="relative">
                   <button
@@ -103,16 +107,16 @@
 
                 <!--  -->
                 <div x-show="mobileDropDown" @click.away="mobileDropDown = false">
-                {% for childLink in link.links %}
-                  <div>
-                    <a
-                      href="{{ link.url }}"
-                      class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                    >
-                      {{ childLink.title }}
-                    </a>
-                  </div>
-                {% endfor %}
+                  {% for childLink in link.links %}
+                    <div>
+                      <a
+                        href="{{ link.url }}"
+                        class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                      >
+                        {{ childLink.title }}
+                      </a>
+                    </div>
+                  {% endfor %}
                 </div>
 
               {% else %}
@@ -130,3 +134,25 @@
     </div>
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "mobile_menu_title",
+      "label": "title",
+      "default": "menu",
+      "info": "this is for the mobile menu"
+    },
+    {
+      "type": "link_list",
+      "id": "another_menu",
+      "label": "Another header menu",
+      "default": "main-menu",
+      "info": "this is for the mobile menu"
+    }
+  ]
+}
+{% endschema %}
