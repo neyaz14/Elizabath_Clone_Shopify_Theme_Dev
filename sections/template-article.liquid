@@ -1,0 +1,202 @@
+<article>
+  <section class="border p-4 border-amber-200">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'article_title' %}
+          <div class="">
+            <h1>{{ article.title }}</h1>
+          </div>
+
+        {% when 'article_date' %}
+          {% if section.settings.enable_published_Date %}
+            <time datetime="{{ article.published_at |date:"%Y-%m-%d" }}">
+              {{ article.created_at | date: format: 'on_date' }}
+            </time>
+          {% endif %}
+
+        {% when 'article_author' %}
+          {% if section.settings.enable_author %}
+            <small> {{ article.author }} </small>
+          {% endif %}
+
+          <!-- Image tag -->
+        {% when 'featured_img' %}
+          {% if article.image != blank %}
+            <img
+              src="{{ article.image | image_url: width: 800, height: 320 }}"
+              width="{{ article.image.width }}"
+              height="{{ article.image.height }}"
+              loading="lazy"
+              class="w-full h-80 obje "
+              alt="{{ article.image.alt }}"
+            >
+          {% else %}
+            {% assign placeholder_image = section.settings.placeholder_img_svg %}
+            {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 object-center bg-blue-50' }}
+          {% endif %}
+
+        {% when 'article_content' %}
+          <p>
+            {{ article.content }}
+          </p>
+      {% endcase %}
+    {% endfor %}
+  </section>
+</article>
+
+<section>
+  <button
+    onclick="goBack()"
+    class="inline-flex items-center px-6 py-3 border border-gray-600 text-gray-800 font-medium rounded-lg hover:border-gray-500 hover:text-black transform hover:scale-105 transition-all duration-300"
+  >
+    Go Back
+  </button>
+</section>
+
+<script>
+  function goBack() {
+    // Check if there's history to go back to
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback to home page if no history
+      window.location.href = '{{ shop.url }}';
+    }
+  }
+</script>
+
+{% if blog.comments_enabled? %}
+  {% if section.settings.enable_comment_box %}
+    <div id="comments" class="my-8 border-amber-900 ">
+      {% if article.comments_count > 0 %}
+        <div class="flex items-center justify-center"><h1>See what people are saying</h1></div>
+
+        {% paginate article.comments by 2 %}
+          {% for comment in article.comments %}
+            <div class="border border-amber-400">
+              {{ comment.author }}
+              {{ comment.content }}
+              {{ comment.email }}
+            </div>
+          {% endfor %}
+          {% if paginate.pages > 1 %}
+            {{ paginate | default_pagination }}
+          {% endif %}
+        {% endpaginate %}
+
+      {% else %}
+        There are no commnets in this article
+      {% endif %}
+    </div>
+    <div class="mb-8 border-amber-100 " id="comment_form">
+      {% form 'new_comment', article %}
+        <div class="flex-1 mx-auto items-center justify-center max-w-4xl px-4 ">
+          <div class="px-1 md:w-1/2 mb-3.5  ">
+            <div class="flex  justify-between">
+              <div class="px-3 md:w-1/2 ">
+                <label for="comment_author" class="block">আপনার নাম</label>
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="comment_author"
+                  class="border p-2 w-full"
+                  required
+                  placeholder="Jone Doe"
+                >
+              </div>
+
+              <div class="px-3 md:w-1/2 ">
+                <label for="comment_email" class="block">আপনার ইমেইল</label>
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="comment_email"
+                  class="border border-gray-300  p-2 w-full"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="comment_body" class="block">আপনার কমেন্ট</label>
+              <textarea name="comment[body]" id="comment_body" class="border p-2 w-full" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="cursor-pointer  bg-blue-300 hover:bg-blue-400  text-white px-4 py-2 rounded">
+              সাবমিট করুন
+            </button>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+  {% endif %}
+  {% else %}
+    Comment are not allowed
+{% else %}
+  Comments are unavilable
+{% endif %}
+
+{% schema %}
+{
+  "name": "Template Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_published_Date",
+      "label": "Display Published Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_comment_box",
+      "label": "Enable Comment Box",
+      "default": true
+    },
+
+    {
+      "type": "select",
+      "id": "placeholder_img_svg",
+      "label": "Select the One for showing the svg",
+      "options": [
+        { "value": "lifestyle-1", "label": "SVG -1" },
+        { "value": "lifestyle-2", "label": "SVG -2" },
+        { "value": "lifestyle-3", "label": "SVG -3" }
+      ],
+      "default": "lifestyle-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article_title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "article_author",
+      "name": "author",
+      "limit": 1
+    },
+    {
+      "type": "article_date",
+      "name": "Published  date",
+      "limit": 1
+    },
+    {
+      "type": "featured_img",
+      "name": "Thumbnail",
+      "limit": 1
+    },
+    {
+      "type": "article_content",
+      "name": "Content",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}
