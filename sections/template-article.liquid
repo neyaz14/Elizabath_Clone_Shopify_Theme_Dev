@@ -1,4 +1,4 @@
-<article class="py-9" itemscope itemtype="https://schema.org/BlogPosting" >
+<article class="py-9" itemscope itemtype="http://schema.org/BlogPosting">
   <section class="border p-4 border-amber-200">
     {% for block in section.blocks %}
       {% case block.type %}
@@ -16,13 +16,13 @@
 
         {% when 'article_author' %}
           {% if section.settings.enable_author %}
-            <div itemscope itemtype="https://schema.org/Person">
-
-              <small itemprop="author" > {{ article.author }} </small>
+            <div itemscope itemtype="http://schema.org/Person">
+              <small itemprop="author"> {{ article.author }} </small>
             </div>
           {% endif %}
 
           <!-- Image tag -->
+
         {% when 'featured_img' %}
           {% if article.image != blank %}
             <img
@@ -39,7 +39,7 @@
           {% endif %}
 
         {% when 'article_content' %}
-          <p>
+          <p itemprop="articleBody">
             {{ article.content }}
           </p>
       {% endcase %}
@@ -164,6 +164,33 @@
 {% else %}
   Comments are unavilable
 {% endif %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+    "image": [
+      "{{ article.image | img_url: "medium" | prepend: 'https:' | json }}"
+    ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: format: "default" | json }},
+    "dateCreated": {{ article.created_at | date: format: "default" | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    }
+  }
+</script>
 
 {% schema %}
 {
