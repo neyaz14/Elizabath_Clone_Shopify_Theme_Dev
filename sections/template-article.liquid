@@ -1,10 +1,10 @@
-<article>
+<article class="py-9" itemscope itemtype="https://schema.org/BlogPosting" >
   <section class="border p-4 border-amber-200">
     {% for block in section.blocks %}
       {% case block.type %}
         {% when 'article_title' %}
           <div class="">
-            <h1>{{ article.title }}</h1>
+            <h1 itemprop="headline">{{ article.title }}</h1>
           </div>
 
         {% when 'article_date' %}
@@ -16,7 +16,10 @@
 
         {% when 'article_author' %}
           {% if section.settings.enable_author %}
-            <small> {{ article.author }} </small>
+            <div itemscope itemtype="https://schema.org/Person">
+
+              <small itemprop="author" > {{ article.author }} </small>
+            </div>
           {% endif %}
 
           <!-- Image tag -->
