@@ -82,9 +82,16 @@
               {{ comment.email }}
             </div>
           {% endfor %}
-          {% if paginate.pages > 1 %}
-            {{ paginate | default_pagination }}
-          {% endif %}
+          <!-- Custom Paginate -->
+
+          {% comment %}
+            {% if paginate.pages > 1 %}
+              {{ paginate | default_pagination }}
+            {% endif %}
+          {% endcomment %}
+          <div class="max-w-6xl mx-auto">
+            {% render 'pagination', paginate: paginate %}
+          </div>
         {% endpaginate %}
 
       {% else %}
