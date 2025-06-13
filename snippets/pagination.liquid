@@ -1,10 +1,25 @@
+{% if paginate.pages > 0 %}
+  <nav role="navigation" class="flex gap-3 font-bold justify-center my-8">
+    {% if paginate.previous %}
+      <a class="border text-amber-500 p-3 border-amber-500 rounded-3xl transition-all duration-300 hover:bg-amber-500 hover:text-white hover:shadow-lg transform hover:-translate-y-1 hover:scale-3d " href="{{ paginate.previous.url }}">
+        {{- paginate.previous.title -}}
+      </a>
+    {% endif %}
+ 
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <a class="border hover:scale-3d  text-amber-500 p-3 border-amber-500 rounded-3xl transition-all duration-300 hover:bg-amber-500 hover:text-white hover:shadow-lg transform hover:-translate-y-1" href="{{ part.url }}">{{ part.title }}</a>
+      {% elsif part.title == paginate.current_page %}
+        <span class="border hover:scale-3d   bg-amber-500 text-white p-3 border-amber-500 rounded-3xl">{{ part.title }}</span>
+      {% else %}
+        <span class="border text-gray-400 p-3 border-gray-400 rounded-3xl">{{ part.title }}</span>
+      {% endif %}
+    {% endfor %}
 
-{% if paginate.pages >0 %}
-    
-    <nav role="navigation" class="flex text-black font-bold  justify-center my-8" >
-        
-         <a href="{{ paginate.previous.url }}">{{ paginate.previous.title }}</a>
-
-         <a href="{{ paginate.next.url }}">{{ paginate.next.title }}</a>
-    </nav>
+    {% if paginate.next %}
+      <a class="border hover:scale-3d  text-amber-500 p-3 border-amber-500 rounded-3xl transition-all duration-300 hover:bg-amber-500 hover:text-white hover:shadow-lg transform hover:-translate-y-1" href="{{ paginate.next.url }}">
+        {{- paginate.next.title -}}
+      </a>
+    {% endif %}
+  </nav>
 {% endif %}
