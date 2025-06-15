@@ -1,35 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections": {
-        "template": {
-            "type": "template-article",
-            "blocks": {
-                "title": {
-                    "type": "article_title",
-                    
-                },
-                "author": {
-                    "type": "article_author",
-                    
-                },
-                "date": {
-                    "type": "article_date",
-                    
-                },
-                "featured_img": {
-                    "type": "featured_img",
-                    
-                },
-                "content": {
-                    "type": "article_content",
-                    
-                },
-                
-                
-            },
-            "blorck_order": ["title","author", "date", "featured_img", "content" ]
+  "sections": {
+    "template": {
+      "type": "template-article",
+      "blocks": {
+        "article_title_bz8Ydw": {
+          "type": "article_title",
+          "settings": {}
+        },
+        "article_author_cUa7VE": {
+          "type": "article_author",
+          "settings": {}
+        },
+        "featured_img_nHJtjF": {
+          "type": "featured_img",
+          "settings": {}
+        },
+        "article_content_RWkVpV": {
+          "type": "article_content",
+          "settings": {}
+        },
+        "article_date_WLtkeM": {
+          "type": "article_date",
+          "settings": {}
         }
-    },
-    "order": [
-        "template"
-    ]
+      },
+      "block_order": [
+        "article_title_bz8Ydw",
+        "article_author_cUa7VE",
+        "featured_img_nHJtjF",
+        "article_content_RWkVpV",
+        "article_date_WLtkeM"
+      ],
+      "settings": {
+        "enable_author": true,
+        "enable_published_Date": true,
+        "enable_comment_box": true,
+        "placeholder_img_svg": "lifestyle-1"
+      }
+    }
+  },
+  "order": [
+    "template"
+  ]
 }
