@@ -24,7 +24,7 @@
       "type": "featured-collection",
       "settings": {
         "title": "Our Best Sellers",
-        "collection": "all"
+        "collection": "automated-collection"
       }
     },
     "text-block": {
