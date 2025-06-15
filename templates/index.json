@@ -9,12 +9,12 @@
  */
 {
   "sections": {
-    "featured-collections": {
+    "featured-collection": {
       "type": "featured-collection",
       "settings": {}
     }
   },
   "order": [
-    "featured-collections"
+    "featured-collection"
   ]
 }
