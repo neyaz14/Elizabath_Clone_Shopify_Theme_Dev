@@ -1,7 +1,7 @@
 <section class="py-12">
   <h2 class="text-center text-3xl font-bold mb-6">{{ settings.title }}</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    {% for product in collections[settings.collection].products limit: section.settings.number_of_products_to_show %}
+    {% for product in collections[settings.collection].products %}
       <div class="border p-4 text-center">
         <h3>{{ product.title }}</h3>
         <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
@@ -13,32 +13,24 @@
 
 {% schema %}
 {
-    "name": "Featured Collection",
-    "settings": [
-        {
-            "type": "text",
-            "id": "title",
-            "default": "Featured Collection",
-            "label": "Title"
-        },
-        {
-            "type": "collection",
-            "id": "featured_collection",
-            "label": "Collection"
-        },
-        {
-            "type": "range",
-            "id": "number_of_products_to_show",
-            "min": 4,
-            "max": 12,
-            "default": 4,
-            "label": "Number of products to show"
-        }
-    ],
-    "presets": [
-        {
-            "name": "Featured Collection"
-        }
-    ]
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
 }
 {% endschema %}
