@@ -9,14 +9,35 @@
  */
 {
   "sections": {
-    "featured-collection": {
+    "hero-banner": {
+      "type": "hero-banner",
+      "settings": {
+        "title": "Welcome to Neyaz Store",
+        "subtitle": "Physics meets tech.",
+        "background_image": "",
+        "show_button": true,
+        "button_text": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
+    "featured-products": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": "all"
+        "title": "Our Best Sellers",
+        "collection": "all"
+      }
+    },
+    "text-block": {
+      "type": "custom-text",
+      "settings": {
+        "heading": "Why Choose Us?",
+        "text": "We bring you quality products powered by the love of science and code."
       }
     }
   },
   "order": [
-    "featured-collection"
+    "hero-banner",
+    "featured-products",
+    "text-block"
   ]
 }
