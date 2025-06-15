@@ -11,7 +11,9 @@
   "sections": {
     "template": {
       "type": "template-collection",
-      "settings": {}
+      "settings": {
+        "range_num": 3
+      }
     }
   },
   "order": [
