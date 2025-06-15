@@ -1,4 +1,4 @@
-{% paginate collection.products by 3 %}
+{% paginate collection.products by section.settings.range_num %}
   {% for product in collection.products %}
     {% if product.featured_image %}
       <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.featured_image.alt }}">
@@ -15,3 +15,19 @@
 
   {% render 'pagination', paginate: paginate %}
 {% endpaginate %}
+
+{% schema %}
+{
+  "name": "Pagination Range",
+  "settings": [
+    {
+      "type": "range",
+      "id": "range_num",
+      "label": "Sellect the range",
+      "default": 2,
+      "min": 2,
+      "max": 6
+    }
+  ]
+}
+{% endschema %}
