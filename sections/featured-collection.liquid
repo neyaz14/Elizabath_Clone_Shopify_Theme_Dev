@@ -4,7 +4,7 @@
     {% for product in collections[section.settings.collection].products limit: 4 %}
       <div class="border p-4 text-center">
         <h3>{{ product.title }}</h3>
-        <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
+        <img src="{{ product.featured_image | image_url: width: 400 ,height:full }}" alt="{{ product.title }}">
         <p>{{ product.price | money }}</p>
       </div>
     {% endfor %}
