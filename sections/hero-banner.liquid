@@ -1,13 +1,13 @@
 <section
   class="relative text-center text-white py-16"
-  style="background-image: url({{ settings.background_image | image_url: width: 1600 }}); background-size: cover;"
+  style="background-image: url({{ section.settings.background_image | image_url: width: 1600 }}); background-size: cover;"
 >
   <div class="bg-black bg-opacity-50 p-10">
-    <h1 class="text-5xl font-bold">{{ settings.title }}</h1>
-    <p class="mt-4 text-lg">{{ settings.subtitle }}</p>
-    {% if settings.show_button %}
-      <a href="{{ settings.button_link }}" class="inline-block mt-6 bg-white text-black px-6 py-3 rounded">
-        {{ settings.button_text }}
+    <h1 class="text-5xl font-bold">{{ section.settings.title }}</h1>
+    <p class="mt-4 text-lg">{{ section.settings.subtitle }}</p>
+    {% if section.settings.show_button %}
+      <a href="{{ section.settings.button_link }}" class="inline-block mt-6 bg-white text-black px-6 py-3 rounded">
+        {{ section.settings.button_text }}
       </a>
     {% endif %}
   </div>
