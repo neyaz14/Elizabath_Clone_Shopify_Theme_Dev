@@ -1,7 +1,7 @@
 <section class="py-12">
-  <h2 class="text-center text-3xl font-bold mb-6">{{ settings.title }}</h2>
+  <h2 class="text-center text-3xl font-bold mb-6">{{ section.settings.title }}</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    {% for product in collections[settings.collection].products %}
+    {% for product in collections[section.settings.collection].products %}
       <div class="border p-4 text-center">
         <h3>{{ product.title }}</h3>
         <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
