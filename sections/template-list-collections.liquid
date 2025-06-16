@@ -1,23 +1,49 @@
-{% for collection in collections %}
-  {% unless collection.handle == 'frontpage' %}
-    {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
-    <a class="text-2xl font-bold " href="{{ collection.url }}">More {{ collection_title }} &rsaquo;</a>
-    {% for product in collection.products limit: 2 %}
-      {% assign grid_item_width = 'large--one-fifth medium--one-half' %}
-      <div>
-        <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
-        {{ product.price | money }}
-        {% unless product.available -%}
-          <br>
-          <strong>sold out</strong>
-        {%- endunless %}
-        <a href="{{ product.url | within: collection }}">
-          <img
-            src="{{ product.featured_image.src | img_url: 'large' }}"
-            alt="{{ product.featured_image.alt | escape }}"
-          >
-        </a>
-      </div>
-    {% endfor %}
-  {% endunless %}
-{% endfor %}
+<div class="flex flex-col items-center my-8">
+  <h1 class="text-3xl font-medium">{{ section.settings.title }}</h1>
+
+  <div class="max-w-6xl mx-auto my-3">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+          <div class="w-full py-6 px-3">
+            <div class="border bg-white overflow-hidden">
+              <a href="{{ collection.url }}">
+                <div class="h-80 overflow-hidden">
+                  {% if collection.featured_image != blank %}
+                    {% assign collection_image = collection.featured_image %}
+                  {% else %}
+                    {% assign collection_image = collection.products.first.image %}
+                  {% endif %}
+
+                  <img
+                    class="w-full h-full object-cover transition duration-1000 ease-in-out transform hover:scale-105"
+                    src="{{ collection_image | img_url: 'medium' }}"
+                    alt="{{ collection.title | escape }}"
+                  >
+                </div>
+              </a>
+
+              <div class="p-4 bg-gray-100">
+                <h1 class="text-xl">{{ collection.title }}</h1>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Template List Collections",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "default": "Collections",
+            "label": "Title"
+        }
+    ]
+}
+{% endschema %}
