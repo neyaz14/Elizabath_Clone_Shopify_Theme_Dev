@@ -14,7 +14,7 @@
       "settings": {
         "title": "Welcome to Neyaz Store",
         "subtitle": "Physics meets tech.",
-        "background_image": "shopify://shop_images/theme_cover_image.jpg",
+        "background_image": "shopify://shop_images/Main.jpg",
         "show_button": true,
         "button_text": "Shop Now",
         "button_link": "/collections/all"
