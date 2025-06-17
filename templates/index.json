@@ -33,11 +33,17 @@
         "heading": "Why Choose Us?",
         "text": "We bring you quality products powered by the love of science and code."
       }
+    },
+    "contact_form_ykXBJq": {
+      "type": "contact-form",
+      "name": "Contact form ",
+      "settings": {}
     }
   },
   "order": [
     "hero-banner",
     "featured-products",
-    "text-block"
+    "text-block",
+    "contact_form_ykXBJq"
   ]
 }
