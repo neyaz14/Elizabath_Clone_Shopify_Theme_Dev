@@ -6,7 +6,7 @@
   <div>
     <div class="border rounded-lg overflow-hidden">
       <img
-        src="{{ featured_image | img_url: 'large' }}"
+        src="{{ featured_image | img_url: 'small' }}"
         alt="{{ featured_image.alt | escape }}"
         id="ProductPhotoImg"
         class="w-full object-cover"
@@ -15,7 +15,7 @@
 
     <div class="flex gap-4 mt-4 overflow-x-auto">
       {% for image in product.images %}
-        <a href="{{ image.src | img_url: 'large' }}" class="border rounded hover:ring-2 ring-indigo-500 transition">
+        <a href="{{ image.src | img_url: 'small' }}" class="border rounded hover:ring-2 ring-indigo-500 transition">
           <img
             src="{{ image.src | img_url: 'compact' }}"
             alt="{{ image.alt | escape }}"
