@@ -39,7 +39,20 @@
       </div>
     </div>
 
-    <div class="product--information"></div>
+    <div class="product--information">
+      {% form 'product', product %}
+        <div>
+          <span>
+            {{ product.vendor }}
+          </span>
+        </div>
+        <div>
+          <h1>{{ product.title }}</h1>
+          <h1>{{ product.price }}</h1>
+          <h1>{{ product.compare_at_price }}</h1>
+        </div>
+      {% endform %}
+    </div>
   </div>
 </div>
 
